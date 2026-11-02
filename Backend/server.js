@@ -31,7 +31,7 @@ app.post("/test", async(req, res) => {
     try{
         const response = await fetch("https://api.openai.com/v1/completions", options);
         const data = await response.json();
-        console.log(data);
+        console.log(data.choices[0].message.content);
         res.send(data);
     } catch(err) {
         console.log(err);
