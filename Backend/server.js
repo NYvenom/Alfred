@@ -2,6 +2,7 @@ import express from "express";
 import "dotenv/config";
 import cors from "cors";
 import mongoose from "mongoose";
+import chatRoutes from "./routes/chat.js";
 
 import dns from 'node:dns';
 dns.setServers(['8.8.8.8', '1.1.1.1']);
@@ -11,6 +12,8 @@ const port = 8080;
 
 app.use(express.json());
 app.use(cors());
+
+app.use("/api", chatRoutes);
 
 app.listen(port, () => {
     console.log(`Server running on ${port}`);
