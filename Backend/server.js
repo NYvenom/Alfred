@@ -54,3 +54,5 @@ const connectDB = async() => {
 //         console.log(err);
 //     }
 // })
+
+//Todo: Add error handling middleware
