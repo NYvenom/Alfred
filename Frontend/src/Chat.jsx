@@ -1,35 +1,52 @@
 import "./Chat.css";
-import { useContext } from "react";
+import { useContext, useState, useEffect } from "react";
 import { MyContext } from "./MyContext";
 import ReactMarkdown from "react-markdown";
-import rehypeHighligh from "rehype-highlight";
+import rehypeHighlight from "rehype-highlight";
 import "highlight.js/styles/github-dark.css";
 
 function Chat() {
-    const {newChat, previousChats} = useContext(MyContext);
+    const { newChat, previousChats, reply } = useContext(MyContext);
+    const [latestReply, setLatestReply] = useState(null);
+
+    useEffect(() => {
+        if(!previousChats?.length) return;
+
+        const content = reply.split(" ");
+
+        let idx = 0;
+        const interval = setInterval(() => {
+            setLatestReply(content.slice(0, idx+1)).join(" ");
+
+            idx++;
+            if(idx >= content.length) clearInterval(interval);
+        }, 40);
+
+        return() => clearInterval(interval);
+    }, previousChats, reply);
+
     return (
         <>
             {newChat && <h1>Start a new chat!</h1>}
             <div className="chats">
                     {
-                        previousChats?.map((chat, idx) => 
-                            <div className={chat.role === "user" ? "userDiv" : "alfredDiv"} key={idx}>
-                                {
-                                    chat.role === "user" ? 
-                                    <p className="userMessage">{chat.content}</p> : 
-                                    <ReactMarkdown rehypePlugins={[rehypeHighligh]}>{chat.content}</ReactMarkdown>
-                                }
-                            </div>
-                        )
-                    }
+                        previousChats?.slice(0, -1).map((chat, idx) => 
+                        <div className={chat.role === "user" ? "userDiv" : "alfredDiv"} key={idx}>
+                            {
+                                chat.role === "user" ? 
+                                <p className="userMessage">{chat.content}</p> : 
+                                <ReactMarkdown rehypePlugins={[rehypeHighlight]}>{chat.content}</ReactMarkdown>
+                            }
+                        </div>
+                    )
+                }
 
-
-                <div className="user">
-                    <p className="userMessage">User Message</p>
-                </div>
-                <div className="alfred">
-                    <p className="alfredMessage">Alfred Message</p>
-                </div>
+                {
+                    previousChats.length > 0 && latestReply != null &&
+                    <div className="alfredDiv" key={"typing"}>
+                        <ReactMarkdown rehypePlugins={[rehypeHighlight]}>{latestReply}</ReactMarkdown>
+                    </div>
+                }
             </div>
         </>
     )

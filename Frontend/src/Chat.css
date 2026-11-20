@@ -4,13 +4,13 @@
     padding: 8rem;
 }
 
-.user {
+.userDiv {
     display: flex;
     justify-content: flex-end;
     font-size: 0.9rem;
 }
 
-.alfred {
+.alfredDiv {
     text-align: left;
     font-size: 0.9rem;
 }
@@ -24,6 +24,10 @@
     width: fit-content;
 }
 
-.alfredMessage {
+.hljs {
+    border-radius: px !important;
+}
 
+pre {
+    white-space: pre-wrap;
 }
