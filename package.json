@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "react-spinners": "^0.17.1",
+    "uuid": "^14.0.3"
+  }
+}
