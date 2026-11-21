@@ -73,6 +73,7 @@ function Sidebar() {
                 {
                     allThreads?.map((thread, idx) => (
                         <li key={idx} 
+                        className={thread.threadId = currentThreadId ? "highlighted" : " "}
                         onClick={(e) => changeThread(thread.threadId)}
                         >
                             {thread.title}
@@ -87,7 +88,7 @@ function Sidebar() {
             </ul>
 
             <div className="sign">
-                <p>My Alfred &hearts;</p>
+                <p>Alfred <i class="fa-brands fa-wolf-pack-battalion"></i></p>
             </div>
         </section>
     )
